@@ -88,14 +88,6 @@ def histogram_average(history, probs):
   histogram_inter /= len(history)
   return histogram_inter
 
-def score_image(type, score, epoch):
-  score_img = vutils.make_grid(
-    torch.unsqueeze(torch.unsqueeze(torch.unsqueeze(score, 1), 2), 3),
-    nrow=7,
-    normalize=True,
-    pad_value=0.5)
-  writer.add_image(type + '_score', score_img, epoch)
-
 def edge_decision(type, alphas, selected_idxs, candidate_flags, probs_history, epoch, model, args,
                  early_stop_or_not):
   mat = F.softmax(torch.stack(alphas, dim=0), dim=-1).detach()
@@ -150,7 +142,6 @@ def edge_decision(type, alphas, selected_idxs, candidate_flags, probs_history, e
                                                       selected_edge_idx,
                                                       selected_op_idx))
     print(type + "_candidate_flags {}".format(candidate_flags))
-    score_image(type, score, epoch)
     return True, selected_idxs, candidate_flags
 
   else:
@@ -159,7 +150,6 @@ def edge_decision(type, alphas, selected_idxs, candidate_flags, probs_history, e
                                                  type,
                                                  selected_idxs))
     print(type + "_candidate_flags {}".format(candidate_flags))
-    score_image(type, score, epoch)
     return False, selected_idxs, candidate_flags
 
 def main():
@@ -430,8 +420,6 @@ def main():
     cumulative_epoch += 1
 
     logging.info('genotype = %s', model.get_genotype(force=True))
-    writer.add_scalar('stats/train_acc', train_acc, epoch)
-    writer.add_scalar('stats/valid_acc', valid_acc, epoch)
     utils.save(model, os.path.join(args.save, 'weights.pt'))
 
   logging.info("#" * 30 + " Done " + "#" * 30)
