@@ -19,20 +19,20 @@ python3 train_search.py --dataset=fashionMNIST
 ### Retrain on FashionMNIST
 <arch_name> is the searched cell recorded in genotypes.py, such as `FashionMNIST_1`, `FashionMNIST_2`, and `FashionMNIST_3`.
 ``` 
-python3 train.py --auxiliary --cutout --rand_erase --arch=<arch_name> --dataset=fashionMNIST
+python3 train.py --dataset=fashionMNIST --auxiliary --cutout --rand_erase --arch=<arch_name> 
 ```
 If you want to load check point while retraining:
 ```
-python3 train.py --epoch=<remain epochs> --learning_rate=<current lr>  --load_check --load_path=<path of weight.pt> --auxiliary --cutout --rand_erase --arch=<arch_name> --dataset=fashionMNIST
+python3 train.py --dataset=fashionMNIST --epoch=<remain epochs> --learning_rate=<current lr>  --load_check --load_path=<path of weight.pt> --auxiliary --cutout --rand_erase --arch=<arch_name> 
 ```
 
 ### Retrain on EMNIST-Balanced
 ```
-python3 train.py --epoch=200 --batch_size=96 --auxiliary --arch=<arch_name> --dataset=EMNIST-balanced
+python3 train.py --dataset=EMNIST-balanced --epoch=200 --batch_size=96 --auxiliary --arch=<arch_name> 
 ```
 
 ### Pretrained models
 To test pretrained models in ./pretrained_models directory (take FashionMNIST_1.pt as an example):
 ``` 
-python test.py --auxiliary --arch=FashionMNIST_1 --model_path=<path of FashionMNIST_1.pt>
+python3 test.py --dataset=fashionMNIST --auxiliary --arch=FashionMNIST_1 --model_path=<path of FashionMNIST_1.pt>
 ```
